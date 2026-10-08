@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#172554"><title>Smart Attendance | Vikas Yadav</title>
+<link rel="stylesheet" href="style.css"></head><body>
+<div id="loginScreen" class="login"><div class="loginbox"><div class="logo">🎓</div>
+<h1>Smart Attendance</h1><p>QR Code Student Attendance System</p>
+<form id="loginForm"><input id="loginUser" placeholder="Username" value="admin" required>
+<input id="loginPass" type="password" placeholder="Password" value="admin123" required>
+<button class="primary" type="submit">Login</button></form><small>Demo: admin / admin123</small></div></div>
+<div id="app" hidden><header><div><h1>🎓 Smart Attendance</h1><small>QR Code Attendance Management</small></div>
+<div class="user">👤 Admin <button id="logout" class="outline">Logout</button></div></header>
+<nav><button data-page="dashboard" class="active">Dashboard</button><button data-page="students">Students</button>
+<button data-page="scanner">Scan QR</button><button data-page="attendance">Attendance</button></nav>
+<main>
+<section id="dashboard" class="page active"><div class="heading"><div><h2>Dashboard</h2><p>Attendance overview and quick actions.</p></div>
+<button class="primary" onclick="go('scanner')">📷 Scan Attendance</button></div>
+<div class="stats"><div><b id="sStudents">0</b><span>Total Students</span></div><div><b id="sPresent">0</b><span>Present Today</span></div>
+<div><b id="sAbsent">0</b><span>Absent Today</span></div><div><b id="sRate">0%</b><span>Today's Rate</span></div></div>
+<div class="grid2"><div class="card"><h3>Quick Actions</h3><div class="actions">
+<button onclick="go('students')">➕ Add Student</button><button onclick="go('scanner')">📷 Scan QR</button>
+<button onclick="go('attendance')">📊 View Reports</button><button onclick="markAllAbsent()">⚠️ Mark Remaining Absent</button>
+</div></div><div class="card"><h3>Recent Attendance</h3><div id="recent"></div></div></div></section>
+
+<section id="students" class="page"><div class="heading"><div><h2>Student Management</h2><p>Register, edit, delete and generate QR codes.</p></div></div>
+<div class="grid2"><div class="card"><h3 id="formTitle">Add Student</h3><form id="studentForm">
+<input type="hidden" id="editId"><label>Full Name<input id="name" required placeholder="Rahul Kumar"></label>
+<label>Roll Number<input id="roll" required placeholder="101"></label><label>Course / Class<input id="course" placeholder="B.Tech CSE"></label>
+<button class="primary" type="submit">Save Student</button><button type="button" id="cancelEdit" class="outline" hidden>Cancel Edit</button>
+</form></div><div class="card qr"><h3>Student QR</h3><div id="qr"><p>Select QR from student list.</p></div>
+<button id="downloadQR" class="secondary" hidden>⬇ Download QR</button></div></div>
+<div class="card"><div class="bar"><h3>Registered Students</h3><input id="studentSearch" placeholder="🔎 Search..."></div>
+<div class="table"><table><thead><tr><th>Name</th><th>Roll</th><th>Course</th><th>Actions</th></tr></thead><tbody id="studentRows"></tbody></table></div></div></section>
+
+<section id="scanner" class="page"><div class="heading"><div><h2>QR Scanner</h2><p>Scan a registered student's QR code.</p></div></div>
+<div class="grid2"><div class="card scanbox"><div id="reader"></div><div id="camMsg">Scanner ready.</div>
+<button id="start" class="primary">📷 Start Camera</button><button id="stop" class="secondary" hidden>⏹ Stop Camera</button>
+<button id="retry" class="outline" hidden>🔄 Retry</button></div><div class="card"><h3>Instructions</h3>
+<ol><li>Register a student.</li><li>Open their QR code.</li><li>Start the camera.</li><li>Allow camera permission.</li><li>Point the camera at the QR.</li></ol>
+<div id="scanResult" class="result">Waiting for scan…</div></div></div></section>
+
+<section id="attendance" class="page"><div class="heading"><div><h2>Attendance Reports</h2><p>Filter and export attendance records.</p></div>
+<button class="secondary" onclick="exportCSV()">⬇ Export CSV</button></div>
+<div class="card filters"><input type="date" id="filterDate"><input id="filterText" placeholder="🔎 Student / Roll / Course">
+<button class="outline" onclick="clearFilter()">Clear</button></div>
+<div class="card table"><table><thead><tr><th>Date</th><th>Time</th><th>Student</th><th>Roll</th><th>Course</th><th>Status</th></tr></thead>
+<tbody id="attRows"></tbody></table></div></section></main>
+<footer>Smart Student Attendance System · Developed by <b>Vikas Yadav</b></footer><div id="toast"></div></div>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="app.js"></script>
+</body></html>
